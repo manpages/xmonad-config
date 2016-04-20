@@ -16,8 +16,10 @@ import           XMonad.Layout.Tabbed
 import           XMonad.Layout.TwoPane
 import           XMonad.Util.Run                 (spawnPipe)
 import           XMonad.Util.EZConfig            (additionalKeys)
+
 import qualified XMonad.StackSet                 as W
 import qualified Data.Map                        as M
+import qualified XMonad.Hooks.EwmhDesktops       as E
 
 
 ------------------------------------------------------------------------
@@ -93,8 +95,7 @@ base = Tall 1 (3/100) (1/2)
 myLayout = avoidStruts (
     base                            |||
     Mirror base                     |||
-    noBorders (fullscreenFull Full) |||
-    spiral (6/7))
+    noBorders (fullscreenFull Full) )
 
 
 ------------------------------------------------------------------------
@@ -327,24 +328,14 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = return ()
+--myStartupHook = return ()
 
 
 ------------------------------------------------------------------------
 -- Run xmonad with all the defaults we set up.
 --
-main = do
-  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
-  xmonad $ defaults {
-      logHook = dynamicLogWithPP $ xmobarPP {
-            ppOutput = hPutStrLn xmproc
-          , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
-          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-          , ppSep = "   "
-      }
-      , manageHook = manageDocks <+> myManageHook
-      , startupHook = setWMName "LG3D"
-  }
+main = xmonad $ E.ewmh defaults { handleEventHook = E.fullscreenEventHook <+>
+                                                  E.ewmhDesktopsEventHook }
 
 
 ------------------------------------------------------------------------
@@ -367,10 +358,5 @@ defaults = defaultConfig {
 
     -- key bindings
     keys               = myKeys,
-    mouseBindings      = myMouseBindings,
-
-    -- hooks, layouts
-    layoutHook         = smartBorders $ myLayout,
-    manageHook         = myManageHook,
-    startupHook        = myStartupHook
+    mouseBindings      = myMouseBindings
 }
