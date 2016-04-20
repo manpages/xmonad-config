@@ -260,8 +260,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
 
   -- Quit xmonad.
-  , ((modMask .|. shiftMask, xK_q),
-     io (exitWith ExitSuccess))
+  -- , ((modMask .|. shiftMask, xK_q),
+  --   io (exitWith ExitSuccess))
 
   -- Restart xmonad.
   , ((modMask, xK_q),
