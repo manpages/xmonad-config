@@ -2,22 +2,22 @@
 -- Author: Vic Fryzel
 -- http://github.com/vicfryzel/xmonad-config
 
-import System.IO
-import System.Exit
-import XMonad
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.SetWMName
-import XMonad.Layout.Fullscreen
-import XMonad.Layout.NoBorders
-import XMonad.Layout.Spiral
-import XMonad.Layout.Tabbed
-import XMonad.Layout.ThreeColumns
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
-import qualified XMonad.StackSet as W
-import qualified Data.Map        as M
+import           System.IO
+import           System.Exit
+import           XMonad
+import           XMonad.Hooks.DynamicLog
+import           XMonad.Hooks.ManageDocks
+import           XMonad.Hooks.ManageHelpers
+import           XMonad.Hooks.SetWMName
+import           XMonad.Layout.Fullscreen
+import           XMonad.Layout.NoBorders
+import           XMonad.Layout.Spiral
+import           XMonad.Layout.Tabbed
+import           XMonad.Layout.TwoPane
+import           XMonad.Util.Run                 (spawnPipe)
+import           XMonad.Util.EZConfig            (additionalKeys)
+import qualified XMonad.StackSet                 as W
+import qualified Data.Map                        as M
 
 
 ------------------------------------------------------------------------
@@ -25,10 +25,10 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal = "/usr/bin/gnome-terminal"
+myTerminal = "urxvt"
 
 -- The command to lock the screen or show the screensaver.
-myScreensaver = "/usr/bin/gnome-screensaver-command --lock"
+myScreensaver = "slimlock"
 
 -- The command to take a selective screenshot, where you select
 -- what you'd like to capture on the screen.
@@ -88,14 +88,13 @@ myManageHook = composeAll
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
+base = Tall 1 (3/100) (1/2)
+
 myLayout = avoidStruts (
-    ThreeColMid 1 (3/100) (1/2) |||
-    Tall 1 (3/100) (1/2) |||
-    Mirror (Tall 1 (3/100) (1/2)) |||
-    tabbed shrinkText tabConfig |||
-    Full |||
-    spiral (6/7)) |||
-    noBorders (fullscreenFull Full)
+    base                            |||
+    Mirror base                     |||
+    noBorders (fullscreenFull Full) |||
+    spiral (6/7))
 
 
 ------------------------------------------------------------------------
