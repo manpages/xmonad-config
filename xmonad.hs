@@ -94,6 +94,7 @@ base = Tall 1 (3/100) (1/2)
 
 myLayoutHook = avoidStruts (
     base                            |||
+    tabbed shrinkText tabConfig     |||
     noBorders (fullscreenFull Full) )
 
 
