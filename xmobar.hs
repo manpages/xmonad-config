@@ -11,7 +11,7 @@ Config {
     lowerOnStart = True,
     commands = [
         Run Weather "EPKK" ["-t","<tempC>C <skyCondition>","-L","50","-H","19","-n","#CEFFAC","-h","#FFB6B0","-l","#96CBFE"] 36000,
-        Run Battery ["-t","<left>% / <timeleft>","-L","50","-H","75","-h","green","-n","yell","-l","red"] 10,
+        Run Battery ["-t","<left>% / <timeleft>","-L","50","-H","75","-h","green","-n","yellow","-l","red"] 10,
         Run Memory ["-t","Mem: <usedratio>%","-H","8192","-L","4096","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
         Run Network "wlp8s0" ["-t","Net: <rx>, <tx>","-H","200","-L","10","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
         Run Network "enp9s0" ["-t","Net: <rx>, <tx>","-H","200","-L","10","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
