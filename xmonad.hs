@@ -48,7 +48,7 @@ myLauncher = "$(yeganesh -x -- -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso88
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
 --
-myWorkspaces = ["1:reading","2:web","3:management","4:media","5:fs"] ++ map show [6..7] ++ ["8:music", "9:code"]
+myWorkspaces = ["1:reading","2:web","3:management","4:media","5:fs", "6:research"] ++ map show [7] ++ ["8:music", "9:code"]
 
 
 ------------------------------------------------------------------------
@@ -92,9 +92,8 @@ myManageHook = composeAll
 --
 base = Tall 1 (3/100) (1/2)
 
-myLayout = avoidStruts (
+myLayoutHook = avoidStruts (
     base                            |||
-    Mirror base                     |||
     noBorders (fullscreenFull Full) )
 
 
@@ -317,8 +316,12 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 --
 -- To emulate dwm's status bar
 --
--- > logHook = dynamicLogDzen
---
+
+myLogHook xmproc =
+  dynamicLogWithPP $ xmobarPP { ppOutput = hPutStrLn xmproc
+                              , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
+                              , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
+                              , ppSep = "   " }
 
 
 ------------------------------------------------------------------------
@@ -328,14 +331,19 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
---myStartupHook = return ()
+myStartupHook = setWMName "LG3D"
 
 
 ------------------------------------------------------------------------
 -- Run xmonad with all the defaults we set up.
 --
-main = xmonad $ E.ewmh defaults { handleEventHook = E.fullscreenEventHook <+>
-                                                  E.ewmhDesktopsEventHook }
+main = do
+  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
+  xmonad $ E.ewmh defaults { logHook         = myLogHook xmproc
+                           , startupHook     = myStartupHook
+                           , layoutHook      = myLayoutHook
+                           , handleEventHook = E.fullscreenEventHook <+>
+                                               E.ewmhDesktopsEventHook }
 
 
 ------------------------------------------------------------------------
