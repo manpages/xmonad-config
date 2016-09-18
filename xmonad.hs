@@ -48,7 +48,7 @@ myLauncher = "$(yeganesh -x -- -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso88
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
 --
-myWorkspaces = ["1:reading","2:web","3:management","4:media","5:fs", "6:research"] ++ map show [7] ++ ["8:music", "9:code"]
+myWorkspaces = ["1:reading","2:web","3:management","4:media","5:fs", "6:research", "7:man code", "8:music", "9:programming"]
 
 
 ------------------------------------------------------------------------
