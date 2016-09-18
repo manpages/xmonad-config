@@ -51,6 +51,11 @@ For source code, or to contribute, see the
     sudo cabal update
     sudo cabal install --global yeganesh
 
+### Installing requirements on [NixOS](http://nixos.org)
+
+    nix-env -f '<nixpkgs>' -iA haskellPackages.xmobar haskellPackages.yeganesh
+    nix-env -iA nixos.stalonetray nixos.dmenu nixos.scrot
+
 ## Installation
 
 Installing xmonad-config is a matter of backing up any xmonad configuration
